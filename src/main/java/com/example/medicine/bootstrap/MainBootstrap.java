@@ -24,16 +24,16 @@ public class MainBootstrap implements CommandLineRunner {
     UserRoleService userRoleService;
     @Override
     public void run(String... args) throws Exception {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-        User user1 = new User.Builder("admin").withFullname("Админ Админ").withPhonenumber("+996555348520").withEmail("admin@gmail.com").withDateOfBirth(LocalDateTime.now().plusHours(6)).withPassword(passwordEncoder.encode("123")).withGender(Gender.NONE).isActive(1).build();
-        User user2 = new User.Builder("registrationService").withFullname("registrationService").withPhonenumber("0").withEmail("e").withDateOfBirth(LocalDateTime.now().plusHours(6)).withPassword(passwordEncoder.encode("1267476Sha")).withGender(Gender.NONE).isActive(1).build();
-        userService.createUser(user1);
-        userRepository.save(user2);
-        UserRole userRole1 = new UserRole("ROLE_ADMIN",user1);
-        UserRole userRole2 = new UserRole("ROLE_WEBAPP",user2);
-        userRoleService.createUserRole(userRole1);
-        userRoleService.createUserRole(userRole2);
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//
+//        User user1 = new User.Builder("admin").withFullname("Админ Админ").withPhonenumber("+996555348520").withEmail("admin@gmail.com").withDateOfBirth(LocalDateTime.now().plusHours(6)).withPassword(passwordEncoder.encode("123")).withGender(Gender.NONE).isActive(1).build();
+//        User user2 = new User.Builder("registrationService").withFullname("registrationService").withPhonenumber("0").withEmail("e").withDateOfBirth(LocalDateTime.now().plusHours(6)).withPassword(passwordEncoder.encode("1267476Sha")).withGender(Gender.NONE).isActive(1).build();
+//        userService.createUser(user1);
+//        userRepository.save(user2);
+//        UserRole userRole1 = new UserRole("ROLE_ADMIN",user1);
+//        UserRole userRole2 = new UserRole("ROLE_WEBAPP",user2);
+//        userRoleService.createUserRole(userRole1);
+//        userRoleService.createUserRole(userRole2);
 
     }
 }

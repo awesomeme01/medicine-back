@@ -1,0 +1,56 @@
+@RestController
+@RequestMapping("/api")
+"/myUser" - GET
+"/registration" - GET - User
+    @Column(name = "username", nullable = false, unique = true, length = 50)
+    private String username;
+    @Column(name = "email", nullable = false, unique = true, length = 70)
+    private String email;
+    @Column(name = "fullname", nullable = false, unique = true, length = 80)
+    private String fullname;
+    @Column(name = "phone_number", length = 14, unique = true)
+    private String phoneNumber;
+    @Column(name = "password", nullable = false)
+    private String password;
+    @Column(name = "gender", nullable = false)
+    private Gender gender;
+    @Column(name = "birthDate", nullable = false)
+    private LocalDateTime birthDate;
+"/changePassword" - POST - PasswordWrapper
+    private User user;
+    private String newPassword;
+
+@RestController
+@RequestMapping("/user")
+"/getAll" - GET
+"/getById/{id}" - GET
+"/create" - POST - User
+    @Column(name = "username", nullable = false, unique = true, length = 50)
+    private String username;
+    @Column(name = "email", nullable = false, unique = true, length = 70)
+    private String email;
+    @Column(name = "fullname", nullable = false, unique = true, length = 80)
+    private String fullname;
+    @Column(name = "phone_number", length = 14, unique = true)
+    private String phoneNumber;
+    @Column(name = "password", nullable = false)
+    private String password;
+    @Column(name = "gender", nullable = false)
+    private Gender gender;
+    @Column(name = "birthDate", nullable = false)
+    private LocalDateTime birthDate;
+
+"/disable/{id}" - POST - no body
+"/activate/{id}" - POST - no body
+"/delete/{id}" - DELETE
+
+@RestController
+@Secured("ROLE_ADMIN")
+@RequestMapping("/userRoles")
+"/getAll" - GET
+"/getAllByUserId/{id}" - GET
+"/getAllByRole/{role}" - GET
+"/createForUser/{userId}" - POST - UserRole
+    private String role;
+"/delete/{id}" - DELETE
+

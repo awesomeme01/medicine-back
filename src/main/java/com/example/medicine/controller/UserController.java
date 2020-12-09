@@ -5,6 +5,7 @@ import com.example.medicine.model.User;
 import com.example.medicine.service.UserRoleService;
 import com.example.medicine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,11 @@ public class UserController {
     @Secured("ROLE_ADMIN")
     @PostMapping(path = "/create")
     public Response create(@RequestBody User user){
-        return new Response(true, "Created new User object", userService.createUser(user), userRolesService.getUserRolesByUser(user));
+        try{
+            return new Response(true, "Created new User object", userService.createUser(user), userRolesService.getUserRolesByUser(user));
+        }catch (DataIntegrityViolationException ex){
+            return new Response(false, "Couldn't create user: ERROR: " + ex.getMessage(), ex.getStackTrace());
+        }
     }
     @Secured("ROLE_ADMIN")
     @PostMapping(path = "/disable/{id}")

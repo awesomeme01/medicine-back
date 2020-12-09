@@ -45,6 +45,9 @@ public class UserRoleController {
     }
     @GetMapping(path = "/getAllByRole/{role}")
     public Response getUsersByRole(@PathVariable String role){
+        if(role.substring(0,4) != "ROLE_"){
+            return new Response(false, "Role field is incorrect, it should start with \"ROLE_\"", null);
+        }
         return new Response(true, "Users with role = " + role, userRolesService.getUsersByRoles(role));
     }
     @PostMapping(path = "/createForUser/{userId}")

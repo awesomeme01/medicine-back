@@ -74,6 +74,12 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    @Override
+    public User register(User user) {
+        userRepository.save(user);
+        user.setIsActive(0);
+        return user;
+    }
 
     @Override
     public void deleteUser(Long id) {

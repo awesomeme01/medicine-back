@@ -41,7 +41,7 @@ public class LoginController {
     @ResponseBody
     public Response registerUser(@RequestBody User user){
         try{
-            return new Response(true, "Registration successful!", userService.createUser(user), userRolesService.getUserRolesByUser(user));
+            return new Response(true, "Registration successful!", userService.register(user));
         }
         catch (Exception e){
             return new Response(false, "Unexpected error! \n" + e.getMessage(), e.getStackTrace());

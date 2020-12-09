@@ -14,4 +14,6 @@ public interface UserService {
     User getByUsername(String username);
     User activateUser(Long id);
     User disableUser(Long id);
+
+    User register(User user);
 }

@@ -13,6 +13,7 @@ import java.security.Principal;
 import java.util.NoSuchElementException;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/user")
 public class UserController {
     @Autowired

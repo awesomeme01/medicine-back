@@ -91,6 +91,7 @@ public class User {
             user1.fullname = this.fullname;
             user1.password = this.password;
             user1.gender = this.gender;
+            user1.birthDate = this.birthDate;
             user1.isActive = this.isActive;
             user1.phoneNumber = this.phoneNumber;
             return user1;

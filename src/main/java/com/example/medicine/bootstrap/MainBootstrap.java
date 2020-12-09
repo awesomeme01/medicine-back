@@ -26,14 +26,22 @@ public class MainBootstrap implements CommandLineRunner {
     public void run(String... args) throws Exception {
 //        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 //
-//        User user1 = new User.Builder("admin").withFullname("Админ Админ").withPhonenumber("+996555348520").withEmail("admin@gmail.com").withDateOfBirth(LocalDateTime.now().plusHours(6)).withPassword(passwordEncoder.encode("123")).withGender(Gender.NONE).isActive(1).build();
-//        User user2 = new User.Builder("registrationService").withFullname("registrationService").withPhonenumber("0").withEmail("e").withDateOfBirth(LocalDateTime.now().plusHours(6)).withPassword(passwordEncoder.encode("1267476Sha")).withGender(Gender.NONE).isActive(1).build();
-//        userService.createUser(user1);
-//        userRepository.save(user2);
-//        UserRole userRole1 = new UserRole("ROLE_ADMIN",user1);
-//        UserRole userRole2 = new UserRole("ROLE_WEBAPP",user2);
-//        userRoleService.createUserRole(userRole1);
-//        userRoleService.createUserRole(userRole2);
+        User user1 = new User.Builder("admin").withFullname("Админ Админ").withPhonenumber("+996555348520").withEmail("admin@gmail.com").withDateOfBirth(LocalDateTime.now().plusHours(6)).withPassword("123").withGender(Gender.NONE).isActive(1).build();
+        User user2 = new User.Builder("cashier").withFullname("Кассир Кассир").withPhonenumber("+996555348521").withEmail("cashier@gmail.com").withDateOfBirth(LocalDateTime.now().plusHours(6)).withPassword("123").withGender(Gender.NONE).isActive(1).build();
+        User user3 = new User.Builder("reception").withFullname("Приемная Приемная").withPhonenumber("+996555348522").withEmail("reception@gmail.com").withDateOfBirth(LocalDateTime.now().plusHours(6)).withPassword("123").withGender(Gender.FEMALE).isActive(1).build();
+        User user4 = new User.Builder("doctor").withFullname("Врач Врач").withPhonenumber("+996555438523").withEmail("doctor@gmail.com").withDateOfBirth(LocalDateTime.now().plusHours(6)).withPassword("123").withGender(Gender.FEMALE).isActive(1).build();
+        userService.createUser(user1);
+        userService.createUser(user2);
+        userService.createUser(user3);
+        userService.createUser(user4);
+        UserRole userRole1 = new UserRole("ROLE_ADMIN", user1);
+        UserRole userRole2 = new UserRole("ROLE_CASHIER", user2);
+        UserRole userRole3 = new UserRole("ROLE_RECEPTION", user3);
+        UserRole userRole4 = new UserRole("ROLE_DOCTOR", user4);
+        userRoleService.createUserRole(userRole1);
+        userRoleService.createUserRole(userRole2);
+        userRoleService.createUserRole(userRole3);
+        userRoleService.createUserRole(userRole4);
 
     }
 }

@@ -17,21 +17,24 @@ public class Meeting {
     @ManyToOne
     @JoinColumn(name = "userDoctor")
     private User userDoctor;
-    @Column(name = "dateTime")
-    private LocalDateTime dateTime;
+    @Column(name = "dateCreated")
+    private LocalDateTime dateCreated;
+    @Column(name = "dateFrom")
+    private LocalDateTime dateFrom;
+    @Column(name = "dateFrom")
+    private LocalDateTime dateTo;
     @Column(name = "status")
     private int status;//0 = arranged -1 canceled 1 accomplished
 
     public Meeting() {
         this.status = 0;
-        this.dateTime = LocalDateTime.now().plusHours(6);
+        this.dateCreated = LocalDateTime.now().plusHours(6);
     }
 
-    public Meeting(Long id, User userPatient, User userDoctor, LocalDateTime dateTime, int status) {
+    public Meeting(Long id, User userPatient, User userDoctor, int status) {
         this.id = id;
         this.userPatient = userPatient;
         this.userDoctor = userDoctor;
-        this.dateTime = dateTime;
         this.status = status;
     }
 
@@ -59,12 +62,28 @@ public class Meeting {
         this.userDoctor = userDoctor;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public LocalDateTime getDateFrom() {
+        return dateFrom;
+    }
+
+    public void setDateFrom(LocalDateTime dateFrom) {
+        this.dateFrom = dateFrom;
+    }
+
+    public LocalDateTime getDateTo() {
+        return dateTo;
+    }
+
+    public void setDateTo(LocalDateTime dateTo) {
+        this.dateTo = dateTo;
     }
 
     public int getStatus() {

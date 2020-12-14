@@ -31,6 +31,8 @@ public class User {
     private int isActive;
     @Column(name = "birthDate", nullable = false)
     private LocalDateTime birthDate;
+    @Column(name = "cardNumber")
+    private Long cardNumber;
     private ArrayList<String> roles;
 
 

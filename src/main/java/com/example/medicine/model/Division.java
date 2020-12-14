@@ -10,6 +10,8 @@ public class Division {
     private Long id;
     @Column(name = "name")
     private String name;
+    @Column(name = "status")
+    private int status;
 
     public Division() {
     }

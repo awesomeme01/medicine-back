@@ -9,6 +9,8 @@ public interface MeetingsService {
     List<Meeting> getAll();
     List<Meeting> getByPatient(User user);
     List<Meeting> getByDoctor(User user);
+    Meeting changeStatus(Long id, int status);
+    Meeting getById(Long id);
     Meeting create(Meeting meeting);
     void delete(Long id);
 }

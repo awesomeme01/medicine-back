@@ -37,4 +37,16 @@ public class MeetingsServiceImpl implements MeetingsService{
     public void delete(Long id) {
         meetingsRepository.deleteById(id);
     }
+
+    @Override
+    public Meeting getById(Long id) {
+        return meetingsRepository.findById(id).get();
+    }
+
+    @Override
+    public Meeting changeStatus(Long id, int status) {
+        Meeting meeting = meetingsRepository.findById(id).get();
+        meeting.setStatus(status);//0 = arranged -1 canceled 1 accomplished
+        return meetingsRepository.save(meeting);
+    }
 }

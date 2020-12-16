@@ -1,7 +1,6 @@
 package com.example.medicine.model;
 
 import com.example.medicine.enums.Gender;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

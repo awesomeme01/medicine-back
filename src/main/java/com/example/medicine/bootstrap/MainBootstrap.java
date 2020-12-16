@@ -4,13 +4,11 @@ import com.example.medicine.enums.Gender;
 import com.example.medicine.model.User;
 import com.example.medicine.model.UserRole;
 import com.example.medicine.repository.UserRepository;
-import com.example.medicine.repository.UserRoleRepository;
 import com.example.medicine.service.UserRoleService;
 import com.example.medicine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

@@ -20,7 +20,7 @@ public class Meeting {
     private LocalDateTime dateCreated;
     @Column(name = "dateFrom")
     private LocalDateTime dateFrom;
-    @Column(name = "dateFrom")
+    @Column(name = "dateTo")
     private LocalDateTime dateTo;
     @Column(name = "status")
     private int status;//0 = arranged -1 canceled 1 accomplished

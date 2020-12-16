@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/division")
+@RequestMapping("api/division")
 public class DivisionController {
     @Autowired
     DivisionService divisionService;

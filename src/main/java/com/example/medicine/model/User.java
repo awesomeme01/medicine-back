@@ -30,8 +30,14 @@ public class User {
     private int isActive;
     @Column(name = "birthDate", nullable = false)
     private LocalDateTime birthDate;
-    @Column(name = "cardNumber")
-    private Long cardNumber;
+    @Column(name = "decryptionCode")
+    private String decryptionCode;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "patient_card", referencedColumnName = "id")
+    private PatientCard patientCard;
+    @Column(name = "patientcard_id")
+    private Long patientCardId;
+
     private ArrayList<String> roles;
 
 
@@ -179,5 +185,29 @@ public class User {
     }
     public void addRoles(String role){
         this.roles.add(role);
+    }
+
+    public String getDecryptionCode() {
+        return decryptionCode;
+    }
+
+    public void setDecryptionCode(String decryptionCode) {
+        this.decryptionCode = decryptionCode;
+    }
+
+    public PatientCard getPatientCard() {
+        return patientCard;
+    }
+
+    public void setPatientCard(PatientCard patientCard) {
+        this.patientCard = patientCard;
+    }
+
+    public Long getPatientCardId() {
+        return patientCardId;
+    }
+
+    public void setPatientCardId(Long patientCardId) {
+        this.patientCardId = patientCardId;
     }
 }

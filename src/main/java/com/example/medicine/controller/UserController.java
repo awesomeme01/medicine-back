@@ -1,7 +1,9 @@
 package com.example.medicine.controller;
 
 import com.example.medicine.helper.Response;
+import com.example.medicine.helper.UserFront;
 import com.example.medicine.model.User;
+import com.example.medicine.model.UserRole;
 import com.example.medicine.service.UserRoleService;
 import com.example.medicine.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,14 +46,22 @@ public class UserController {
         catch (Exception ex){
             return new Response(false, "Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
         }
+
     }
     @Secured("ROLE_ADMIN")
     @PostMapping(path = "/create")
-    public Response create(@RequestBody User user){
+    public Response create(@RequestBody UserFront userFront){
         try{
-            return new Response(true, "Created new User object", userService.createUser(user), userRolesService.getUserRolesByUser(user));
-        }catch (DataIntegrityViolationException ex){
+            User user = userFront.getUser();
+            UserRole userRole = new UserRole(userFront.getRole(), user);
+            userRolesService.createUserRole(userRole);
+            return new Response(true, "Created new User object with role = " + userRole.getRole(), userService.createUser(user), userRolesService.getUserRolesByUser(user));
+        }
+        catch (DataIntegrityViolationException ex){
             return new Response(false, "Couldn't create user: ERROR: " + ex.getMessage(), ex.getStackTrace());
+        }
+        catch (Exception ex){
+            return new Response(false, "Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
         }
     }
     @Secured("ROLE_ADMIN")

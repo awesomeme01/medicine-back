@@ -1,6 +1,5 @@
 package com.example.medicine.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -13,22 +12,20 @@ public class PatientCard {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne(mappedBy = "patientCard")
-    private User user;
+    private User patient;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "address")
     private Address address;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnore
-    @JoinColumn(name = "doctor")
-    private User doctor;
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User createdBy;
 
+    public PatientCard() {
+    }
+
     public PatientCard(User user, Address address) {
-        this.user = user;
+        this.patient = user;
         this.address = address;
     }
 
@@ -48,12 +45,12 @@ public class PatientCard {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public User getPatient() {
+        return patient;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPatient(User patient) {
+        this.patient = patient;
     }
 
     public Address getAddress() {
@@ -62,13 +59,5 @@ public class PatientCard {
 
     public void setAddress(Address address) {
         this.address = address;
-    }
-
-    public User getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(User doctor) {
-        this.doctor = doctor;
     }
 }

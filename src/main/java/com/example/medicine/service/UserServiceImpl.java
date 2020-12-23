@@ -87,4 +87,9 @@ public class UserServiceImpl implements UserService{
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    public User updatePatientCard(User user) {
+        return null;
+    }
 }

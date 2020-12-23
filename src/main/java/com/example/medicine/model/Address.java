@@ -11,7 +11,7 @@ public class Address {
     @Column
     private String district;
     @Column
-    private String City;
+    private String city;
     @Column
     private String inhabitedLocality;
     @Column
@@ -28,7 +28,7 @@ public class Address {
 
     public Address(String district, String city, String inhabitedLocality, String street, String house, String apartment, String homeTelephone) {
         this.district = district;
-        City = city;
+        this.city = city;
         this.inhabitedLocality = inhabitedLocality;
         this.street = street;
         this.house = house;
@@ -45,11 +45,11 @@ public class Address {
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
     public void setCity(String city) {
-        City = city;
+        this.city = city;
     }
 
     public String getInhabitedLocality() {

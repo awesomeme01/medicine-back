@@ -1,6 +1,7 @@
 package com.example.medicine.model;
 
 import com.example.medicine.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,9 +17,9 @@ public class User {
     private Long id;
     @Column(name = "username", nullable = false, unique = true, length = 50)
     private String username;
-    @Column(name = "email", nullable = false, unique = true, length = 70)
+    @Column(name = "email", nullable = true, unique = true, length = 70)
     private String email;
-    @Column(name = "fullname", nullable = false, unique = true, length = 80)
+    @Column(name = "fullname", nullable = false, length = 80)
     private String fullname;
     @Column(name = "phone_number", length = 14, unique = true)
     private String phoneNumber;
@@ -32,17 +33,19 @@ public class User {
     private LocalDateTime birthDate;
     @Column(name = "decryptionCode")
     private String decryptionCode;
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_card", referencedColumnName = "id")
     private PatientCard patientCard;
-    @Column(name = "patientcard_id")
-    private Long patientCardId;
 
     private ArrayList<String> roles;
 
 
     private User() {
+//        String splitted[] = fullname.toLowerCase().split(" ");
+//        this.decryptionCode = splitted[1] + splitted[0];
         this.isActive = 1;
+
     }
 
     public static class Builder{
@@ -201,13 +204,5 @@ public class User {
 
     public void setPatientCard(PatientCard patientCard) {
         this.patientCard = patientCard;
-    }
-
-    public Long getPatientCardId() {
-        return patientCardId;
-    }
-
-    public void setPatientCardId(Long patientCardId) {
-        this.patientCardId = patientCardId;
     }
 }

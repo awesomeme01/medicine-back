@@ -2,19 +2,20 @@ package com.example.medicine.helper;
 
 import com.example.medicine.model.Address;
 import com.example.medicine.model.PatientCard;
+import com.example.medicine.model.User;
 
 public class PatientCardWrapper {
+    private User patient;
     private PatientCard patientCard;
     private Address address;
-    private Long doctorId;
 
     public PatientCardWrapper() {
+        patientCard = new PatientCard();
     }
 
     public PatientCardWrapper(PatientCard patientCard, Address address, Long doctorId) {
         this.patientCard = patientCard;
         this.address = address;
-        this.doctorId = doctorId;
     }
 
     public PatientCard getPatientCard() {
@@ -33,11 +34,11 @@ public class PatientCardWrapper {
         this.address = address;
     }
 
-    public Long getDoctorId() {
-        return doctorId;
+    public User getPatient() {
+        return patient;
     }
 
-    public void setDoctorId(Long doctorId) {
-        this.doctorId = doctorId;
+    public void setPatient(User patient) {
+        this.patient = patient;
     }
 }

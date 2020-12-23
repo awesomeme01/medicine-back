@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Response {
     private Boolean isSuccessful;
+    private String messageRU;
     private String message;
     private Object object;
     private List<UserRole> userRole;
@@ -16,6 +17,21 @@ public class Response {
         this.isSuccessful = isSuccessful;
         this.message = message;
         this.object = object;
+    }
+
+    public Response(Boolean isSuccessful, String messageRU, String message, Object object) {
+        this.isSuccessful = isSuccessful;
+        this.messageRU = messageRU;
+        this.message = message;
+        this.object = object;
+    }
+
+    public Response(Boolean isSuccessful, String messageRU, String message, Object object, List<UserRole> userRole) {
+        this.isSuccessful = isSuccessful;
+        this.messageRU = messageRU;
+        this.message = message;
+        this.object = object;
+        this.userRole = userRole;
     }
 
     public Response(Boolean isSuccessful, String message, Object object, List<UserRole> userRole) {
@@ -57,4 +73,11 @@ public class Response {
         this.object = object;
     }
 
+    public String getMessageRU() {
+        return messageRU;
+    }
+
+    public void setMessageRU(String messageRU) {
+        this.messageRU = messageRU;
+    }
 }

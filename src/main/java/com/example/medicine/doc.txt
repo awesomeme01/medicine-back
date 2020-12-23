@@ -1,56 +1,106 @@
-@RestController
-@RequestMapping("/api")
-"/myUser" - GET
-"/registration" - GET - User
-    @Column(name = "username", nullable = false, unique = true, length = 50)
-    private String username;
-    @Column(name = "email", nullable = false, unique = true, length = 70)
-    private String email;
-    @Column(name = "fullname", nullable = false, unique = true, length = 80)
-    private String fullname;
-    @Column(name = "phone_number", length = 14, unique = true)
-    private String phoneNumber;
-    @Column(name = "password", nullable = false)
-    private String password;
-    @Column(name = "gender", nullable = false)
-    private Gender gender;
-    @Column(name = "birthDate", nullable = false)
-    private LocalDateTime birthDate;
-"/changePassword" - POST - PasswordWrapper
-    private User user;
-    private String newPassword;
+Controllers
+1) UserController
+2) UserRoleController
+3) PatientCardController
+4) MeetingController
 
-@RestController
-@RequestMapping("/user")
-"/getAll" - GET
-"/getById/{id}" - GET
-"/create" - POST - User
-    @Column(name = "username", nullable = false, unique = true, length = 50)
-    private String username;
-    @Column(name = "email", nullable = false, unique = true, length = 70)
-    private String email;
-    @Column(name = "fullname", nullable = false, unique = true, length = 80)
-    private String fullname;
-    @Column(name = "phone_number", length = 14, unique = true)
-    private String phoneNumber;
-    @Column(name = "password", nullable = false)
-    private String password;
-    @Column(name = "gender", nullable = false)
-    private Gender gender;
-    @Column(name = "birthDate", nullable = false)
-    private LocalDateTime birthDate;
+1) UserController
 
-"/disable/{id}" - POST - no body
-"/activate/{id}" - POST - no body
-"/delete/{id}" - DELETE
+method: GET
+url: /api/user/getAll
+RequestBody:
+PathVariable:
+expected return: All User objects
+error handling: Unexpected errors
 
-@RestController
-@Secured("ROLE_ADMIN")
-@RequestMapping("/userRoles")
-"/getAll" - GET
-"/getAllByUserId/{id}" - GET
-"/getAllByRole/{role}" - GET
-"/createForUser/{userId}" - POST - UserRole
-    private String role;
-"/delete/{id}" - DELETE
+method: GET
+url: /api/user/getById/{id}
+RequestBody:
+PathVariable: Long id
+expected return: User object with this id
+error handling: Unexpected errors, No such user
+
+method: POST
+url: /api/user/create
+RequestBody: UserFront userFront
+{
+    "user": {
+        "username": "test_1",
+        "email": "test@gmail.com",
+        "fullname": "Test Test",
+        "phoneNumber": "+996555000001",
+        "password": "123",
+        "gender": "MALE",
+        "birthDate": "2001-10-20T00:00:00.0000"
+    },
+    "role": "ROLE_ADMIN"
+}
+PathVariable:
+expected return: Created a new User
+error handling: Unexpected errors, DataIntegrityViolation
+
+method: POST
+url: /api/user/disable/{id}
+RequestBody:
+PathVariable: Long id
+expected return: Disable User with that id - cannot access any service
+error handling: Unexpected errors, No such user
+
+method: POST
+url: /api/user/activate/{id}
+RequestBody:
+PathVariable: Long id
+expected return: Enable or Activate User with that id - can access any service
+error handling: Unexpected errors, No such user
+
+method: DELETE
+url: /api/user/delete/{id}
+RequestBody:
+PathVariable: Long id
+expected return: Delete User with that id - no recovery
+error handling: Unexpected errors, No such user
+
+2)UserRoleController
+
+method: GET
+url: /api/userRoles/getAll
+RequestBody:
+PathVariable:
+expected return: All UserRole objects
+error handling: Unexpected errors
+
+method: GET
+url: /api/userRoles/getAllByUserId/{id}
+RequestBody:
+PathVariable: Long id
+expected return: Roles of the User with that id
+error handling: Unexpected errors, No such User
+
+method: POST
+url: /api/userRoles/createForUser/{userId}
+RequestBody: UserRole userRole
+{
+    "role": "ROLE_ADMIN"
+}
+PathVariable: Long userId
+expected return: New UserRole object
+error handling: Unexpected errors, No such user
+
+method: DELETE
+url: /api/userRoles/delete/{id}
+RequestBody:
+PathVariable: Long id
+expected return: Deleted UserRole with that id
+error handling: Unexpected errors
+
+3)PatientCardController
+TODO: доделать
+4) MeetingController
+TODO: доделать
+5) LogController
+TODO: доделать
+
+
+
+
 

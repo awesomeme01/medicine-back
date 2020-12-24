@@ -58,7 +58,10 @@ public class UserServiceImpl implements UserService{
 
         return user;
     }
-
+    @Override
+    public User updateUser(User user){
+        return userRepository.save(user);
+    }
     @Override
     public User disableUser(Long id) {
         User user = userRepository.findById(id).get();

@@ -16,4 +16,5 @@ public interface UserService {
     User disableUser(Long id);
     User register(User user);
     User updatePatientCard(User user);
+    User updateUser(User user);
 }

@@ -94,7 +94,77 @@ expected return: Deleted UserRole with that id
 error handling: Unexpected errors
 
 3)PatientCardController
-TODO: доделать
+
+method: GET
+role: ROLE_RECEPTION
+url: /api/patientController/getAll
+RequestBody:
+PathVariable:
+expected return: All PatientCard objects
+error handling: Unexpected errors
+
+method: POST
+role: ROLE_RECEPTION
+url: /api/patientController/create
+RequestBody: PatientCardWrapper patientCard
+{
+    "patient": {
+        "fullname": "Patient2",
+        "email": "patient2@gmail.com",
+        "phoneNumber": "+996551010203",
+        "gender": "MALE",
+        "birthDate": "1998-11-20T00:00:00.0000"
+    },
+    "address": {
+        "district": "Свердловский",
+        "city": "Бишкек",
+        "inhabitedLocality": "12мкр",
+        "street": "Ankara",
+        "house": "28/1",
+        "apartment": "21",
+        "homeTelephone": "+996312121212"
+    }
+}
+PathVariable:
+expected return: New Patient card and User - patient created
+error handling: Unexpected errors, Constraint violation exception(some values are not unique)
+
+method: POST
+role: ROLE_DOCTOR
+url: /api/patientController/updatePatientCard
+RequestBody: PatientUpdateWrapper wrapper
+{
+    "id": 59,
+    "address": {
+        "district": "Алматинский",
+        "city": "Алмата",
+        "inhabitedLocality": "12мкр",
+        "street": "Жибек жолу",
+        "house": "22",
+        "apartment": "12",
+        "homeTelephone": "+996312144212"
+    }
+}
+PathVariable:
+expected return: Updated Patient card
+error handling: Unexpected errors, No such Patient Card with that id
+
+method: GET
+role: ROLE_PATIENT
+url: /api/patientController/getMyCard
+RequestBody:
+PathVariable:
+expected return: Medcard of the current user
+error handling: Unexpected errors, There is no MedCard for current user!
+
+method: GET
+role: ROLE_PATIENT
+url: /api/patientController/deletePatientsCard/{id}
+RequestBody:
+PathVariable: Long PatientCardId
+expected return: Deletes the Patient's card, but the user-patient remains(ROLE_PATIENT is removed, and no patientId)
+error handling: Unexpected errors, There is no MedCard with the given id!
+
 4) MeetingController
 TODO: доделать
 5) LogController

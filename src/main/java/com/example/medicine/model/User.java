@@ -33,11 +33,8 @@ public class User {
     private LocalDateTime birthDate;
     @Column(name = "decryptionCode")
     private String decryptionCode;
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "patient_card", referencedColumnName = "id")
-    private PatientCard patientCard;
-
+    @Column(name = "patientCardId")
+    private Long patientCardId;
     private ArrayList<String> roles;
 
 
@@ -198,11 +195,11 @@ public class User {
         this.decryptionCode = decryptionCode;
     }
 
-    public PatientCard getPatientCard() {
-        return patientCard;
+    public Long getPatientCardId() {
+        return patientCardId;
     }
 
-    public void setPatientCard(PatientCard patientCard) {
-        this.patientCard = patientCard;
+    public void setPatientCardId(Long patientCardId) {
+        this.patientCardId = patientCardId;
     }
 }

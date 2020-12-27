@@ -1,5 +1,6 @@
 package com.example.medicine.controller;
 
+import com.example.medicine.helper.DateWrapper;
 import com.example.medicine.helper.Response;
 import com.example.medicine.model.Meeting;
 import com.example.medicine.model.User;
@@ -28,6 +29,9 @@ public class MeetingController {
     @GetMapping("/getAll")
     public Response getAll() {
         try {
+//            for(Meeting meeting: meetingsService.getAll()){
+//                return new
+//            }
             return new Response(true, "Все встречи в базе данных", "All meeting objects", meetingsService.getAll());
         } catch (Exception ex) {
             return new Response(false, "Непредвиденная ошибка на сервере", "Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
@@ -35,9 +39,59 @@ public class MeetingController {
     }
     @Secured("ROLE_RECEPTION")
     @GetMapping("/getFrom")
-    public Response getFrom(@RequestBody LocalDateTime time){
+    public Response getFrom(@RequestBody DateWrapper time){
         try{
-            return new Response(true, "Данные о записях от определенной даты","Meeting calendar from given date", meetingsService.getAll().stream().filter(x->x.getDateFrom().plusHours(6).isAfter(time)));
+            return new Response(true, "Данные о записях от определенной даты","Meeting calendar from given date", meetingsService.getAll().stream().filter(x->x.getDateFrom().plusHours(6).isAfter(time.getDateTime())));
+        }catch (Exception ex){
+            return new Response(false, "Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
+        }
+    }
+    @Secured("ROLE_DOCTOR")
+    @PostMapping("/meetingHappened/{id}")
+    public Response meetingHappened(@PathVariable Long id, Principal principal){
+        try{
+            if(meetingsService.getById(id).getStatusPaid()==0){
+                return new Response(false, "Встреча не была оплачена!", "Unpaid meeting cannot be set to HAPPENED", meetingsService.getById(id));
+            }
+            User user = userService.getByUsername(principal.getName());
+            if(meetingsService.getById(id).getUserDoctor().equals(user)){
+                return new Response(true, "Статус встречи изменен на ПРОИЗОШЕЛ","Meeting happened with id = " + id, meetingsService.changeStatus(id, 1));
+            }
+            return new Response(false, "Данная встреча не принадлежит ПОЛЬЗОВАТЕЛЮ - ВРАЧУ","Meeting doesn't belong to the user connected", null, null);
+        }
+        catch (Exception ex){
+            return new Response(false, "Непредвиденная ошибка на сервере","Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage());
+        }
+    }
+
+    @Secured({"ROLE_RECEPTION","ROLE_DOCTOR"})
+    @PostMapping("/cancelMeeting/{id}")
+    public Response cancelMeeting(@PathVariable Long id, Principal principal){
+        try{
+            User user = userService.getByUsername(principal.getName());
+            if(meetingsService.getById(id).getUserPatient().equals(user) || meetingsService.getById(id).getCreatedBy().equals(user)){
+                return new Response(true, "Встреча с ID номером " + id + " отменена","Meeting cancelled with id = " + id, meetingsService.changeStatus(id, -1));
+            }
+            return new Response(false, "Данная встреча не принадлежит ПОЛЬЗОВАТЕЛЮ", "Meeting doesn't belong to the user connected", null, null);
+        }
+        catch (Exception ex){
+            return new Response(false, "Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
+        }
+    }
+    @Secured("ROLE_PATIENT")
+    @GetMapping("/getMyMeetingsPatient")
+    public Response getMyMeetings(Principal principal){
+        try{
+            return new Response(true, "Мои приемы(визиты)", "My meetings at the hospital", meetingsService.getByPatient(userService.getByUsername(principal.getName())));
+        }catch (Exception ex){
+            return new Response(false, "Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
+        }
+    }
+    @Secured("ROLE_DOCTOR")
+    @GetMapping("/getMyMeetingsDoctor")
+    public Response getMyMeetingsDoctor(Principal principal){
+        try{
+            return new Response(true, "Мои приемы(визиты)(Я врач)", "My(Doctor) meetings at the hospital", meetingsService.getByDoctor(userService.getByUsername(principal.getName())));
         }catch (Exception ex){
             return new Response(false, "Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
         }
@@ -53,35 +107,6 @@ public class MeetingController {
             }
             meeting.setCreatedBy(userService.getByUsername(principal.getName()));
             return new Response(true, "Запись для пациента с ID " + patientId +" была создана.", "Meeting for patient with id = " + patientId + " was created!", meetingsService.create(meeting));
-        }
-        catch (Exception ex){
-            return new Response(false, "Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
-        }
-    }
-
-    @Secured("ROLE_DOCTOR")
-    @PostMapping("/meetingHappened/{id}")
-    public Response meetingHappened(@PathVariable Long id, Principal principal){
-        try{
-            User user = userService.getByUsername(principal.getName());
-            if(meetingsService.getById(id).getUserDoctor().equals(user)){
-                return new Response(true, "Статус встречи изменен на ПРОИЗОШЕЛ","Meeting happened with id = " + id, meetingsService.changeStatus(id, 1));
-            }
-            return new Response(false, "Данная встреча не принадлежит ПОЛЬЗОВАТЕЛЮ - ВРАЧУ","Meeting doesn't belong to the user connected", null, null);
-        }
-        catch (Exception ex){
-            return new Response(false, "Непредвиденная ошибка на сервере","Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage());
-        }
-    }
-    @Secured({"ROLE_RECEPTION","ROLE_DOCTOR"})
-    @PostMapping("/cancelMeeting/{id}")
-    public Response cancelMeeting(@PathVariable Long id, Principal principal){
-        try{
-            User user = userService.getByUsername(principal.getName());
-            if(meetingsService.getById(id).getUserPatient().equals(user) || meetingsService.getById(id).getCreatedBy().equals(user)){
-                return new Response(true, "Встреча с ID номером " + id + " отменена","Meeting cancelled with id = " + id, meetingsService.changeStatus(id, -1));
-            }
-            return new Response(false, "Данная встреча не принадлежит ПОЛЬЗОВАТЕЛЮ", "Meeting doesn't belong to the user connected", null, null);
         }
         catch (Exception ex){
             return new Response(false, "Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage(), ex.getStackTrace());

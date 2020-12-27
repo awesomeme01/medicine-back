@@ -1,6 +1,7 @@
 package com.example.medicine.controller;
 
 import com.example.medicine.helper.AlreadyPaidException;
+import com.example.medicine.helper.DateWrapper;
 import com.example.medicine.helper.Response;
 import com.example.medicine.model.Meeting;
 import com.example.medicine.model.Payment;
@@ -44,9 +45,9 @@ public class PaymentController {
     }
     @Secured({"ROLE_CASHIER", "ROLE_ADMIN"})
     @GetMapping("/getFrom")
-    public Response getFrom(@RequestBody LocalDateTime dateFrom){
+    public Response getFrom(@RequestBody DateWrapper dateWrapper){
         try{
-            return new Response(true, "Все объекты платежей в базе c данной даты " + dateFrom, "All payments in database from " + dateFrom, paymentService.getFrom(dateFrom));
+            return new Response(true, "Все объекты платежей в базе c данной даты " + dateWrapper.getDateTime(), "All payments in database from " + dateWrapper.getDateTime(), paymentService.getFrom(dateWrapper.getDateTime()));
         }
         catch (Exception ex){
             return new Response(false, "Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
@@ -82,6 +83,7 @@ public class PaymentController {
             if(meeting == null){
                 return new Response(false, "Приема с ID номером " + id + " не существует!",  "No meeting with id = " + id + " exists!", null,null);
             }
+            payment.setParent(meeting);
             payment.setCashier(userService.getByUsername(principal.getName()));
             return new Response(true, "Сделан платеж на прием с ID номером " + id, "Payment for meeting with ID " + id + " was saved!", paymentService.create(payment));
         }
@@ -102,7 +104,7 @@ public class PaymentController {
         }
     }
     @Secured("ROLE_ADMIN")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public Response delete(@PathVariable Long id){
         try{
             paymentService.deletePayment(id);

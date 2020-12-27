@@ -43,16 +43,16 @@ public class PaymentServiceImpl implements PaymentService{
     @Override
     public Payment create(Payment payment) throws AlreadyPaidException{
         if(payment.getParent().getStatusPaid()==0){
+            paymentRepository.save(payment);
             List<Payment> previousPayments = getByParent(payment.getParent());
             Double sum = (double)0;
             for(Payment p: previousPayments){
                 sum += p.getAmountPaid();
             }
-            if(sum.compareTo(payment.getParent().getAmountToBePaid())>0){
+            if(sum >= (payment.getParent().getAmountToBePaid())){
                 payment.getParent().setStatusPaid(1);
-                meetingsService.create((Meeting)payment.getParent());
+                meetingsService.create(payment.getParent());
             }
-            paymentRepository.save(payment);
         }
         else{
             throw new AlreadyPaidException();

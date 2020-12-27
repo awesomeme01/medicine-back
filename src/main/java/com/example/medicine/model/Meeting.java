@@ -3,6 +3,8 @@ package com.example.medicine.model;
 //
 //import com.example.medicine.helper.Payable;
 
+import org.springframework.data.repository.NoRepositoryBean;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,8 +36,9 @@ public class Meeting{
     @ManyToOne
     @JoinColumn(name = "createdBy")
     private User createdBy;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Payment> payments;
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
+
+//    private List<Payment> payments;
 
     public Meeting() {
         this.status = 0;
@@ -123,13 +126,13 @@ public class Meeting{
     }
 
 
-    public List<Payment> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
-    }
+//    public Object getPayments() {
+//        return payments;
+//    }
+//
+//    public void setPayments(Object payments) {
+//        this.payments = payments;
+//    }
 
     public User getCreatedBy() {
         return createdBy;

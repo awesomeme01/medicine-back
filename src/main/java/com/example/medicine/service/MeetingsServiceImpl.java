@@ -19,27 +19,27 @@ public class MeetingsServiceImpl implements MeetingsService{
     @Override
     public List<Meeting> getAll() {
         List<Meeting> meetings = meetingsRepository.findAll();
-        for(Meeting meeting: meetings){
-            meeting.setPayments(paymentRepository.findAll().stream().filter(x->x.getParent().equals(meeting)).collect(Collectors.toList()));
-        }
+//        for(Meeting meeting: meetings){
+//            meeting.setPayments(paymentRepository.findAll().stream().filter(x->x.getParent().equals(meeting)).collect(Collectors.toList()));
+//        }
         return meetings;
     }
 
     @Override
     public List<Meeting> getByPatient(User user) {
         List<Meeting> meetings = meetingsRepository.findAll().stream().filter(x->x.getUserPatient().equals(user)).collect(Collectors.toList());
-        for(Meeting meeting: meetings){
-            meeting.setPayments(paymentRepository.findAll().stream().filter(x->x.getParent().equals(meeting)).collect(Collectors.toList()));
-        }
+//        for(Meeting meeting: meetings){
+//            meeting.setPayments(paymentRepository.findAll().stream().filter(x->x.getParent().equals(meeting)).collect(Collectors.toList()));
+//        }
         return meetings;
     }
 
     @Override
     public List<Meeting> getByDoctor(User user) {
         List<Meeting> meetings = meetingsRepository.findAll().stream().filter(x->x.getUserDoctor().equals(user)).collect(Collectors.toList());
-        for(Meeting meeting: meetings){
-            meeting.setPayments(paymentRepository.findAll().stream().filter(x->x.getParent().equals(meeting)).collect(Collectors.toList()));
-        }
+//        for(Meeting meeting: meetings){
+//            meeting.setPayments(paymentRepository.findAll().stream().filter(x->x.getParent().equals(meeting)).collect(Collectors.toList()));
+//        }
         return meetings;
     }
 
@@ -55,7 +55,9 @@ public class MeetingsServiceImpl implements MeetingsService{
 
     @Override
     public Meeting getById(Long id) {
-        return meetingsRepository.findById(id).get();
+        Meeting meeting = meetingsRepository.findById(id).get();
+//        meeting.setPayments(paymentRepository.findAll().stream().filter(x->x.getParent().equals(meeting)).collect(Collectors.toList()));
+        return meeting;
     }
 
     @Override

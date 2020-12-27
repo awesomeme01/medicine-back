@@ -179,15 +179,38 @@ method: GET
 role: ROLE_RECEPTION
 url: api/meeting/getFrom
 RequestBody: LocalDateTime time
+{
+    "dateTime": "2020-11-20T00:00:00.0000"
+}
 PathVariable:
 expected return: All meeting objects from given date
 error handling: Unexpected errors
 
+method: GET
+role: ROLE_PATIENT
+url: api/meeting/getMyMeetingsPatient
+RequestBody:
+PathVariable:
+expected return: My meetings at the hospital
+error handling: Unexpected errors
+
+method: GET
+role: ROLE_DOCTOR
+url: api/meeting/getMyMeetingsDoctor
+RequestBody:
+PathVariable:
+expected return: My DOCTOR meetings
+error handling: Unexpected errors
 
 method: POST
 role: ROLE_RECEPTION
 url: api/meeting/create/{patientId}/{doctorId}
 RequestBody: Meeting meeting
+{
+    "dateFrom": "2020-12-31T08:00:00",
+    "dateTo": "2020-12-31T12:00:00",
+    "amountToBePaid": 250
+}
 PathVariable: Long patientId, Long doctorId
 expected return: Creates new Meeting
 error handling: Unexpected errors, Incorrect id for doctor or patient
@@ -256,17 +279,14 @@ method: POST
 role: ROLE_ADMIN
 url: api/payments/makeForMeeting/{id}
 RequestBody: Payment payment
+{
+    "description": "Оплатил за прием",
+    "amountPaid": 250
+}
+
 PathVariable: Long meetingId
 expected return: All payment objects
 error handling: Unexpected errors, No meeting with the given id exists, Meeting with the given id is already payed fully
-
-method: POST
-role: ROLE_ADMIN
-url: api/payments/updatePayment
-RequestBody: Payment payment
-PathVariable:
-expected return: Updated payment
-error handling: Unexpected errors
 
 method: DELETE
 role: ROLE_ADMIN

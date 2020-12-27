@@ -3,6 +3,7 @@ package com.example.medicine.service;
 import com.example.medicine.model.Meeting;
 import com.example.medicine.model.User;
 import com.example.medicine.repository.MeetingsRepository;
+import com.example.medicine.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +14,33 @@ import java.util.stream.Collectors;
 public class MeetingsServiceImpl implements MeetingsService{
     @Autowired
     MeetingsRepository meetingsRepository;
+    @Autowired
+    PaymentRepository paymentRepository;
     @Override
     public List<Meeting> getAll() {
-        return meetingsRepository.findAll();
+        List<Meeting> meetings = meetingsRepository.findAll();
+        for(Meeting meeting: meetings){
+            meeting.setPayments(paymentRepository.findAll().stream().filter(x->x.getParent().equals(meeting)).collect(Collectors.toList()));
+        }
+        return meetings;
     }
 
     @Override
     public List<Meeting> getByPatient(User user) {
-        return meetingsRepository.findAll().stream().filter(x->x.getUserPatient().equals(user)).collect(Collectors.toList());
+        List<Meeting> meetings = meetingsRepository.findAll().stream().filter(x->x.getUserPatient().equals(user)).collect(Collectors.toList());
+        for(Meeting meeting: meetings){
+            meeting.setPayments(paymentRepository.findAll().stream().filter(x->x.getParent().equals(meeting)).collect(Collectors.toList()));
+        }
+        return meetings;
     }
 
     @Override
     public List<Meeting> getByDoctor(User user) {
-        return meetingsRepository.findAll().stream().filter(x->x.getUserDoctor().equals(user)).collect(Collectors.toList());
+        List<Meeting> meetings = meetingsRepository.findAll().stream().filter(x->x.getUserDoctor().equals(user)).collect(Collectors.toList());
+        for(Meeting meeting: meetings){
+            meeting.setPayments(paymentRepository.findAll().stream().filter(x->x.getParent().equals(meeting)).collect(Collectors.toList()));
+        }
+        return meetings;
     }
 
     @Override

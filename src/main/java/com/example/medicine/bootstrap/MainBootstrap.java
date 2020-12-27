@@ -41,7 +41,8 @@ public class MainBootstrap implements CommandLineRunner {
             userRoleService.createUserRole(userRole2);
             userRoleService.createUserRole(userRole3);
             userRoleService.createUserRole(userRole4);
-        }catch (DataIntegrityViolationException exception){
+        }
+        catch (DataIntegrityViolationException exception){
             System.out.println("Command line runner didn't create objects because they already exist!");
         }
 

@@ -1,12 +1,15 @@
 package com.example.medicine.model;
 
+//
+//import com.example.medicine.helper.Payable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "meeting_med_1")
-public class Meeting {
+public class Meeting{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,10 +26,21 @@ public class Meeting {
     @Column(name = "dateTo")
     private LocalDateTime dateTo;
     @Column(name = "status")
-    private int status;//0 = arranged -1 canceled 1 accomplished
+    private int status;
+    @Column(name = "amountToBePaid")
+    private Double amountToBePaid;
+    @Column(name = "statusPaid")
+    private int statusPaid;
+    @ManyToOne
+    @JoinColumn(name = "createdBy")
+    private User createdBy;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Payment> payments;
 
     public Meeting() {
         this.status = 0;
+        this.statusPaid = 0;
+        this.amountToBePaid = (double)0;
         this.dateCreated = LocalDateTime.now().plusHours(6);
     }
 
@@ -35,6 +49,18 @@ public class Meeting {
         this.userPatient = userPatient;
         this.userDoctor = userDoctor;
         this.status = status;
+    }
+
+    public Double getAmountToBePaid() {
+        return amountToBePaid;
+    }
+
+    public int getStatusPaid() {
+        return statusPaid;
+    }
+
+    public void setStatusPaid(int statusPaid) {
+        this.statusPaid = statusPaid;
     }
 
     public Long getId() {
@@ -88,8 +114,28 @@ public class Meeting {
     public int getStatus() {
         return status;
     }
-
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public void setAmountToBePaid(Double amountToBePaid) {
+        this.amountToBePaid = amountToBePaid;
+    }
+
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 }

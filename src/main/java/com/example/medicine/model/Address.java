@@ -1,5 +1,6 @@
 package com.example.medicine.model;
 
+
 import javax.persistence.*;
 
 @Entity

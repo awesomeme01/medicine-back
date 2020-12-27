@@ -7,21 +7,21 @@ Controllers
 1) UserController
 
 method: GET
-url: /api/user/getAll
+url: api/user/getAll
 RequestBody:
 PathVariable:
 expected return: All User objects
 error handling: Unexpected errors
 
 method: GET
-url: /api/user/getById/{id}
+url: api/user/getById/{id}
 RequestBody:
 PathVariable: Long id
 expected return: User object with this id
 error handling: Unexpected errors, No such user
 
 method: POST
-url: /api/user/create
+url: api/user/create
 RequestBody: UserFront userFront
 {
     "user": {
@@ -40,21 +40,21 @@ expected return: Created a new User
 error handling: Unexpected errors, DataIntegrityViolation
 
 method: POST
-url: /api/user/disable/{id}
+url: api/user/disable/{id}
 RequestBody:
 PathVariable: Long id
 expected return: Disable User with that id - cannot access any service
 error handling: Unexpected errors, No such user
 
 method: POST
-url: /api/user/activate/{id}
+url: api/user/activate/{id}
 RequestBody:
 PathVariable: Long id
 expected return: Enable or Activate User with that id - can access any service
 error handling: Unexpected errors, No such user
 
 method: DELETE
-url: /api/user/delete/{id}
+url: api/user/delete/{id}
 RequestBody:
 PathVariable: Long id
 expected return: Delete User with that id - no recovery
@@ -63,21 +63,21 @@ error handling: Unexpected errors, No such user
 2)UserRoleController
 
 method: GET
-url: /api/userRoles/getAll
+url: api/userRoles/getAll
 RequestBody:
 PathVariable:
 expected return: All UserRole objects
 error handling: Unexpected errors
 
 method: GET
-url: /api/userRoles/getAllByUserId/{id}
+url: api/userRoles/getAllByUserId/{id}
 RequestBody:
 PathVariable: Long id
 expected return: Roles of the User with that id
 error handling: Unexpected errors, No such User
 
 method: POST
-url: /api/userRoles/createForUser/{userId}
+url: api/userRoles/createForUser/{userId}
 RequestBody: UserRole userRole
 {
     "role": "ROLE_ADMIN"
@@ -87,7 +87,7 @@ expected return: New UserRole object
 error handling: Unexpected errors, No such user
 
 method: DELETE
-url: /api/userRoles/delete/{id}
+url: api/userRoles/delete/{id}
 RequestBody:
 PathVariable: Long id
 expected return: Deleted UserRole with that id
@@ -97,7 +97,7 @@ error handling: Unexpected errors
 
 method: GET
 role: ROLE_RECEPTION
-url: /api/patientController/getAll
+url: api/patientController/getAll
 RequestBody:
 PathVariable:
 expected return: All PatientCard objects
@@ -105,7 +105,7 @@ error handling: Unexpected errors
 
 method: POST
 role: ROLE_RECEPTION
-url: /api/patientController/create
+url: api/patientController/create
 RequestBody: PatientCardWrapper patientCard
 {
     "patient": {
@@ -131,7 +131,7 @@ error handling: Unexpected errors, Constraint violation exception(some values ar
 
 method: POST
 role: ROLE_DOCTOR
-url: /api/patientController/updatePatientCard
+url: api/patientController/updatePatientCard
 RequestBody: PatientUpdateWrapper wrapper
 {
     "id": 59,
@@ -151,7 +151,7 @@ error handling: Unexpected errors, No such Patient Card with that id
 
 method: GET
 role: ROLE_PATIENT
-url: /api/patientController/getMyCard
+url: api/patientController/getMyCard
 RequestBody:
 PathVariable:
 expected return: Medcard of the current user
@@ -159,16 +159,125 @@ error handling: Unexpected errors, There is no MedCard for current user!
 
 method: GET
 role: ROLE_PATIENT
-url: /api/patientController/deletePatientsCard/{id}
+url: api/patientController/deletePatientsCard/{id}
 RequestBody:
 PathVariable: Long PatientCardId
 expected return: Deletes the Patient's card, but the user-patient remains(ROLE_PATIENT is removed, and no patientId)
 error handling: Unexpected errors, There is no MedCard with the given id!
 
 4) MeetingController
-TODO: доделать
-5) LogController
-TODO: доделать
+
+method: GET
+role: ROLE_RECEPTION
+url: api/meeting/getAll
+RequestBody:
+PathVariable:
+expected return: All meeting objects
+error handling: Unexpected errors
+
+method: GET
+role: ROLE_RECEPTION
+url: api/meeting/getFrom
+RequestBody: LocalDateTime time
+PathVariable:
+expected return: All meeting objects from given date
+error handling: Unexpected errors
+
+
+method: POST
+role: ROLE_RECEPTION
+url: api/meeting/create/{patientId}/{doctorId}
+RequestBody: Meeting meeting
+PathVariable: Long patientId, Long doctorId
+expected return: Creates new Meeting
+error handling: Unexpected errors, Incorrect id for doctor or patient
+
+method: POST
+role: ROLE_DOCTOR
+url: api/meeting/meetingHappened/{id}
+RequestBody:
+PathVariable: Long meetingId
+expected return: Changes the status of the meeting to 1(happened)
+error handling: Unexpected errors, Meeting doesn't belong to the user connected
+
+method: POST
+role: ROLE_RECEPTION, ROLE_DOCTOR
+url: api/meeting/cancelMeeting/{id}
+RequestBody:
+PathVariable: Long meetingId
+expected return: Changes the status of the meeting to -1(happened)
+error handling: Unexpected errors, Meeting doesn't belong to the user connected
+
+method: DELETE
+role: ROLE_ADMIN
+url: api/meeting/delete/{meetingId}
+RequestBody:
+PathVariable: Long meetingId
+expected return: Deletes the meeting
+error handling: Unexpected errors
+
+
+
+5) Payment Controller
+
+method: GET
+role: ROLE_ADMIN
+url: api/payments/getAll
+RequestBody:
+PathVariable:
+expected return: All payment objects
+error handling: Unexpected errors
+
+method: GET
+role: ROLE_ADMIN
+url: api/payments/getFrom
+RequestBody: LocalDateTime dateFrom
+PathVariable:
+expected return: All payment objects from dateGiven
+error handling: Unexpected errors
+
+method: GET
+role: ROLE_ADMIN
+url: api/payments/getById/{id}
+RequestBody:
+PathVariable:  Long paymentId
+expected return: Payment with id given
+error handling: Unexpected errors
+
+method: GET
+role: ROLE_ADMIN
+url: api/payments/getByCashier/{id}
+RequestBody:
+PathVariable: Long cashierId
+expected return: Payment filtered by cashiers
+error handling: Unexpected errors
+
+method: POST
+role: ROLE_ADMIN
+url: api/payments/makeForMeeting/{id}
+RequestBody: Payment payment
+PathVariable: Long meetingId
+expected return: All payment objects
+error handling: Unexpected errors, No meeting with the given id exists, Meeting with the given id is already payed fully
+
+method: POST
+role: ROLE_ADMIN
+url: api/payments/updatePayment
+RequestBody: Payment payment
+PathVariable:
+expected return: Updated payment
+error handling: Unexpected errors
+
+method: DELETE
+role: ROLE_ADMIN
+url: api/payments/delete/{id}
+RequestBody:
+PathVariable: Long paymentId
+expected return: deleted payment with the given id
+error handling: Unexpected errors
+
+
+
 
 
 

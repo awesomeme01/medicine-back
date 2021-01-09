@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 public class MainBootstrap implements CommandLineRunner {
     @Autowired
     UserService userService;
-    @Autowired
-    UserRepository userRepository;
+//    @Autowired
+//    UserRepository userRepository;
     @Autowired
     UserRoleService userRoleService;
     @Override

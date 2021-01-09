@@ -3,6 +3,7 @@ Controllers
 2) UserRoleController
 3) PatientCardController
 4) MeetingController
+5) PaymentController
 
 1) UserController
 

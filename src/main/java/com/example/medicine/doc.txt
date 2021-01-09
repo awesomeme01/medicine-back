@@ -4,6 +4,7 @@ Controllers
 3) PatientCardController
 4) MeetingController
 5) PaymentController
+6) DiagnoseController
 
 1) UserController
 
@@ -297,7 +298,42 @@ PathVariable: Long paymentId
 expected return: deleted payment with the given id
 error handling: Unexpected errors
 
+6) DiagnoseController
 
+method: POST
+role: ROLE_DOCTOR
+url: api/diagnose/createForUser/{patientId}
+RequestBody: Diagnose diagnose
+{
+
+}
+PathVariable: Long patientId
+expected return: Diagnose Created and returned
+error handling: Unexpected errors
+
+method: GET
+role: "ROLE_ADMIN","ROLE_PATIENT","ROLE_DOCTOR"
+url: api/diagnose/getByPatient/{id}
+RequestBody:
+PathVariable: Long patientId
+expected return: Diagnose History Created For this patient
+error handling: Unexpected errors
+
+method: GET
+role: "ROLE_ADMIN","ROLE_DOCTOR"
+url: api/diagnose/getByDoctor/{id}
+RequestBody:
+PathVariable: Long doctorId
+expected return: Diagnose History Created By this Doctor
+error handling: Unexpected errors
+
+method: DELETE
+role: "ROLE_ADMIN
+url: api/diagnose/deleteById/{id}
+RequestBody:
+PathVariable: Long diagnoseId
+expected return: Diagnose with id given is deleted!
+error handling: Unexpected errors
 
 
 

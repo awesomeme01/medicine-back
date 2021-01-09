@@ -25,7 +25,7 @@ public class DiagnoseController{
         }
     }
     @Secured({"ROLE_ADMIN","ROLE_PATIENT","ROLE_DOCTOR"})
-    @PostMapping("/getByPatient/{id}")
+    @GetMapping("/getByPatient/{id}")
     public Response getByPatient(@PathVariable Long id){
         try {
             return new Response(true, "История болезней пациента с id = " + id, "Diagnose history for patient with id = " + id, diagnoseService.getByPatient(id));
@@ -34,7 +34,7 @@ public class DiagnoseController{
         }
     }
     @Secured({"ROLE_ADMIN","ROLE_DOCTOR"})
-    @PostMapping("/getByDoctor/{id}")
+    @GetMapping("/getByDoctor/{id}")
     public Response getByDoctor(@PathVariable Long id){
         try{
             return new Response(true, "Все диагнозы созданные доктором с id = " + id, "Diagnoses created by doctor with id = " + id , diagnoseService.getByDoctor(id));
@@ -44,7 +44,7 @@ public class DiagnoseController{
         }
     }
     @Secured("ROLE_ADMIN")
-    @PostMapping("/deleteById/{id}")
+    @DeleteMapping("/deleteById/{id}")
     public Response deleteById(@PathVariable Long id){
         try{
             diagnoseService.deleteById(id);

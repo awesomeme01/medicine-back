@@ -21,7 +21,7 @@ public class Diagnose {
     private User doctor;
 
     public Diagnose() {
-        this.dateCreated = LocalDateTime.now().plusHours(6);
+        this.dateTime = LocalDateTime.now().plusHours(6);
     }
 
     public Diagnose(Long id, String title, LocalDateTime dateTime, User patient) {

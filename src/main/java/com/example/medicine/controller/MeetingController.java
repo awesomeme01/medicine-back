@@ -78,6 +78,16 @@ public class MeetingController {
             return new Response(false, "Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
         }
     }
+    @Secured("{ROLE_ADMIN, ROLE_DOCTOR}")//TODO: delete in the future
+    @GetMapping("/getByPatient/{id}")
+    public Response getByPatientId(@PathVariable Long id){
+        try{
+            return new Response(true, "Приемы по пациенту с id = " +id, "Meetings by patient id " + id, meetingsService.getByPatient(userService.getUserById(id)));
+        }catch (Exception ex){
+            return new Response(false, "Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
+        }
+    }
+
     @Secured("ROLE_PATIENT")
     @GetMapping("/getMyMeetingsPatient")
     public Response getMyMeetings(Principal principal){

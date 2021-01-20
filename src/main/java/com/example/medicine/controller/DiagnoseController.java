@@ -24,6 +24,7 @@ public class DiagnoseController{
             return new Response(false, "Непредвиденная ошибка на сервере", "Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
         }
     }
+    
     @Secured({"ROLE_ADMIN","ROLE_PATIENT","ROLE_DOCTOR"})
     @GetMapping("/getByPatient/{id}")
     public Response getByPatient(@PathVariable Long id){
@@ -33,6 +34,7 @@ public class DiagnoseController{
             return new Response(false, "Непредвиденная ошибка на сервере", "Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
         }
     }
+    
     @Secured({"ROLE_ADMIN","ROLE_DOCTOR"})
     @GetMapping("/getByDoctor/{id}")
     public Response getByDoctor(@PathVariable Long id){

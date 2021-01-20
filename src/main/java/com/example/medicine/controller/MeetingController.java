@@ -78,7 +78,7 @@ public class MeetingController {
             return new Response(false, "Непредвиденная ошибка на сервере","Unexpected Error: " + ex.getMessage(), ex.getStackTrace());
         }
     }
-    @Secured({"ROLE_ADMIN, ROLE_DOCTOR"})//TODO: delete in the future
+    @Secured({"ROLE_ADMIN","ROLE_DOCTOR"})//TODO: delete in the future
     @GetMapping("/getByPatient/{id}")
     public Response getByPatientId(@PathVariable Long id){
         try{

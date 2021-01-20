@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/meeting")
+@RequestMapping("/api/meeting")
 public class MeetingController {
     @Autowired
     MeetingsService meetingsService;

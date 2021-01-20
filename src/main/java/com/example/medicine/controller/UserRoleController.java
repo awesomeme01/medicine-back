@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 @RestController
 @CrossOrigin("*")
 @Secured("ROLE_ADMIN")
-@RequestMapping("api/userRoles")
+@RequestMapping("/api/userRoles")
 public class UserRoleController {
     @Autowired
     UserRepository userRepository;

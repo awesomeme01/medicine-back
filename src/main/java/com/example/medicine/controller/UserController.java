@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/user")
+@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     UserService userService;

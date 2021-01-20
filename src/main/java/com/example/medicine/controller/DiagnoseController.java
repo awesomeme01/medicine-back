@@ -11,7 +11,7 @@ import java.security.Principal;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(name = "api/diagnose")
+@RequestMapping(name = "/api/diagnose")
 public class DiagnoseController{
     @Autowired
     DiagnoseService diagnoseService;

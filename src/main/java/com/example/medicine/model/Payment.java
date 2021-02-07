@@ -25,6 +25,7 @@ public class Payment {
     @Column(name = "dateCreated")
     private LocalDateTime dateCreated;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "cashierId")
     private User cashier;
 

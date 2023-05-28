@@ -9,7 +9,7 @@ public class DoctorId {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "user_id")
     private User user;
     @Column(name = "degree")
     private String degree;

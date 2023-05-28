@@ -44,7 +44,6 @@ public class Meeting{
         this.status = 0;
         this.statusPaid = 0;
         this.amountToBePaid = (double)0;
-        this.dateCreated = LocalDateTime.now().plusHours(6);
     }
 
     public Meeting(Long id, User userPatient, User userDoctor, int status) {

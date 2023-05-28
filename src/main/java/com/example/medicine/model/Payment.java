@@ -30,7 +30,6 @@ public class Payment {
 
 
     public Payment() {
-        this.dateCreated = LocalDateTime.now().plusHours(6);
     }
 
     public Long getId() {
